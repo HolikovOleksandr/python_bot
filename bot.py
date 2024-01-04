@@ -1,11 +1,11 @@
 from aiogram import Bot, Dispatcher, F
 from aiogram.filters import CommandStart
-from core.handlers.basic import get_start, get_photo, get_greeting
+from core.handlers.basic import get_start, get_photo, get_greeting, get_location
 from core.filters.iscontact import IsTrueContact
 from core.handlers.contact import get_fake_contact, get_true_contact
 from core.utils.commands import set_commands
 from core.settings import settings
-import logging
+# import logging
 import asyncio
 
 
@@ -19,8 +19,8 @@ async def stop_bot(bot: Bot):
 
 
 async def start():
-  format_type = '%(asctime)s - [%(levelname)s] - %(name)s - (%(filename)s).%(funcName)s(%(lineno)d) - %(message)s'
-  logging.basicConfig(level=logging.INFO, format=format_type)
+  # format_type = '%(asctime)s - [%(levelname)s] - %(name)s - (%(filename)s).%(funcName)s(%(lineno)d) - %(message)s'
+  # logging.basicConfig(level=logging.INFO, format=format_type)
   
   bot = Bot(settings.bots.bot, parse_mode='HTML')
   dp = Dispatcher()
@@ -30,6 +30,7 @@ async def start():
   dp.startup.register(start_bot)
   dp.shutdown.register(stop_bot)
   
+  dp.message.register(get_location, F.location)
   dp.message.register(get_start, CommandStart())
   dp.message.register(get_photo, F.photo)
   dp.message.register(get_true_contact, F.contact, IsTrueContact())

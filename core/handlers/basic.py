@@ -1,21 +1,30 @@
 import json
 from aiogram import Bot
 from aiogram.types import Message
+from core.keyboards.reply import get_reply_keyboard
 
 
-async def get_start(message: Message, bot: Bot):
-  await bot.send_message(message.from_user.id, f'<b>Hello {message.from_user.first_name}</b>')
-  await message.answer(f'<s>Hello {message.from_user.first_name}</s>')
-  await message.reply(f'<tg-spoiler>Hello {message.from_user.first_name}</tg-spoiler>')
+
+async def get_start(mes: Message, bot: Bot):
+  ans = f'<tg-spoiler>Hello {mes.from_user.first_name}</tg-spoiler>'
+  await mes.answer(ans, reply_markup=get_reply_keyboard())
 
 
-async def get_photo(message: Message, bot: Bot):
-  await message.answer('Ooo image?? Om nom nom nom, delicious data...')
-  file = await bot.get_file(message.photo[-1].file_id)
+
+async def get_location(mes: Message, bot: Bot):
+  ans = 'Wow, you\'ve ended up in the middle of nowhere!'
+  await mes.answer(ans)
+
+
+
+async def get_photo(mes: Message, bot: Bot):
+  await mes.answer('Ooo image?? Om nom nom nom, delicious data...')
+  file = await bot.get_file(mes.photo[-1].file_id)
   await bot.download_file(file.file_path, 'photo.jpg')
 
 
-async def get_greeting(message: Message, bot: Bot):
-  await message.answer('Hello!')
-  json_str = json.dumps(message.dict(), default=str)
+
+async def get_greeting(mes: Message, bot: Bot):
+  await mes.answer('Hello!')
+  json_str = json.dumps(mes.dict(), default=str)
   print(json_str)
