@@ -3,7 +3,7 @@ from aiogram.filters import CommandStart
 from core.handlers.basic import get_start, get_photo, get_greeting
 from core.filters.iscontact import IsTrueContact
 from core.handlers.contact import get_fake_contact, get_true_contact
-
+from core.utils.commands import set_commands
 from core.settings import settings
 import logging
 import asyncio
@@ -24,6 +24,8 @@ async def start():
   
   bot = Bot(settings.bots.bot, parse_mode='HTML')
   dp = Dispatcher()
+
+  await set_commands(bot)
 
   dp.startup.register(start_bot)
   dp.shutdown.register(stop_bot)
