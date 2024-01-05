@@ -30,6 +30,6 @@ def get_reply_keyboard():
     kb.adjust(1, 2, 3)
     return kb.as_markup(
         resize_keyboard=True, 
-        one_time_keyboard=True,
+        one_time_keyboard=False,
         input_field_placeholder='Do thomething interesting!'
     ) 
